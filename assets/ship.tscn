@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cerl7c5vvp5sk"]
+[gd_scene load_steps=6 format=3 uid="uid://cerl7c5vvp5sk"]
 
 [ext_resource type="Script" uid="uid://cqljs2jaf4htx" path="res://camera_spring.gd" id="1_laron"]
 [ext_resource type="Script" uid="uid://dx88ajv2ceue" path="res://assets/ship_movement.gd" id="1_x1h0q"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1h0q"]
+albedo_color = Color(0.7348194, 0.117840104, 0.73296076, 1)
+metallic = 1.0
+metallic_specular = 0.75
+roughness = 0.7
+
 [sub_resource type="PrismMesh" id="PrismMesh_x1h0q"]
+material = SubResource("StandardMaterial3D_x1h0q")
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wwg4n"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.014651676, 0.47069666, 0.47069666, 0.073521286, 0.35295743, 0.47060993, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.014651676, 0.47069666, -0.47069666, 0.5, -0.5, 0.5, -0.014651676, 0.47069666, 0.47069666, 0.014651676, 0.47069666, -0.47069666)
