@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cerl7c5vvp5sk"]
+
+[ext_resource type="Script" uid="uid://cqljs2jaf4htx" path="res://camera_spring.gd" id="1_laron"]
+[ext_resource type="Script" uid="uid://dx88ajv2ceue" path="res://assets/ship_movement.gd" id="1_x1h0q"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_x1h0q"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wwg4n"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.014651676, 0.47069666, 0.47069666, 0.073521286, 0.35295743, 0.47060993, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.014651676, 0.47069666, -0.47069666, 0.5, -0.5, 0.5, -0.014651676, 0.47069666, 0.47069666, 0.014651676, 0.47069666, -0.47069666)
+
+[node name="Ship" type="CharacterBody3D"]
+script = ExtResource("1_x1h0q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_x1h0q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_wwg4n")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0.375, 0)
+script = ExtResource("1_laron")
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+current = true

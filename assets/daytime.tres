@@ -1,0 +1,6 @@
+[gd_resource type="PanoramaSkyMaterial" load_steps=2 format=3 uid="uid://8uk24nvtc7vm"]
+
+[ext_resource type="Texture2D" uid="uid://drxkm8lyqsa3q" path="res://assets/DayEnvironmentHDRI087_4K-HDR.exr" id="1_e0k5v"]
+
+[resource]
+panorama = ExtResource("1_e0k5v")
