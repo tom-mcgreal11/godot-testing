@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6kyim0vda2sa"]
+
+[ext_resource type="Script" uid="uid://bnnr2qoffyre6" path="res://basic_ai.gd" id="1_itwwo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0p58"]
+albedo_color = Color(0.5440353, 0.05754122, 0.09348657, 1)
+metallic = 0.38
+metallic_specular = 0.3
+emission_enabled = true
+emission = Color(0.48536968, 0.06216394, 0, 1)
+emission_energy_multiplier = 1.35
+
+[sub_resource type="PrismMesh" id="PrismMesh_cw6e2"]
+material = SubResource("StandardMaterial3D_n0p58")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_03vwd"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.014651676, 0.47069666, 0.47069666, 0.073521286, 0.35295743, 0.47060993, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.014651676, 0.47069666, -0.47069666, 0.5, -0.5, 0.5, -0.014651676, 0.47069666, 0.47069666, 0.014651676, 0.47069666, -0.47069666)
+
+[node name="Entity" type="CharacterBody3D"]
+script = ExtResource("1_itwwo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("PrismMesh_cw6e2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_03vwd")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
