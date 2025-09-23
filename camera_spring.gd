@@ -1,9 +1,6 @@
 extends SpringArm3D
 
-@onready var mouse_sensitivity: float = 0.005
-
-func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+@export var zoom_speed: float = 1.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	#if event is InputEventMouseMotion && Input.mouse_mode == 2:
@@ -13,9 +10,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	#	rotation.x = clamp(rotation.x, -PI/2, PI/4)
 
 	if event.is_action_pressed("wheel_up"):
-		spring_length -= 0.1
+		spring_length = max(1.0, spring_length - zoom_speed)
 	if event.is_action_pressed("wheel_down"):
-		spring_length += 0.1
+		spring_length += zoom_speed
 
 	if event.is_action_pressed("toggle_mouse_capture"):
 		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
