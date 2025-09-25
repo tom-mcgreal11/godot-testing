@@ -1,31 +1,43 @@
 extends CharacterBody3D
 
-@onready var nav = $NavigationAgent3D
-@onready var reached_checkpoint = false
-var gravity := 10
-var speed := 20
+@onready var nav = $NavigationAgent3D as NavigationAgent3D
+@export var patrol_points_root: Node3D
 
-func _ready():
-	nav.target_reached.connect(Callable(self, "_on_nav_target_reached"))
-	nav.navigation_finished.connect(_on_navigation_finished)
+var patrol_points: Array[Node] = []
+var patrol_index = 0
+var speed := 5
+var new_target: Vector3
 
-func _process(delta):
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-	var next_location = nav.get_next_path_position()
-	var current_location = global_transform.origin
-	var new_velocity = (next_location - current_location).normalized() * speed
-	
-	velocity = velocity.move_toward(new_velocity, 0.25)
-	move_and_slide()
-	
-func patrol(target: Vector3):
-	nav.target_position = target
+func _ready() -> void:
+	if patrol_points_root:
+		patrol_points = patrol_points_root.get_children()
+		if patrol_points.size() > 0:
+			set_target(set_next_patrol())
+			print(str(patrol_points[0].global_transform.origin))
+		
+func _unhandled_input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("target"):
+		var random_position = Vector3.ZERO
+		random_position.x = randf_range(-5.0, 5.0)
+		random_position.z = randf_range(-5.0, 5.0)
+		nav.set_target_position(random_position)
+		
+func _physics_process(delta: float) -> void:
+	print("moving to target:" + str(nav.get_next_path_position()))
+	if not nav.is_navigation_finished():
+		var destination = nav.get_next_path_position()
+		var local_destination = destination - global_position
+		var distance = local_destination.normalized()
+		velocity = distance * speed
+		#set_velocity_to_target(new_target)
+		move_and_slide()
+	else:
+		patrol_index = (patrol_index + 1) % patrol_points.size()
+		set_target(set_next_patrol())
 
-func _on_nav_target_reached():
-	# Emit a simple signal the main scene can listen to
-	emit_signal("reached_point", self)
-	
-func _on_navigation_finished():
-	print("Finished.")
-	#get_parent()._on_navigation_finished(self)
+func set_target(target):
+	nav.set_target_position(target.global_transform.origin)
+
+func set_next_patrol():
+	var target_point = patrol_points[patrol_index]
+	return target_point
