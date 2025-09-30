@@ -54,7 +54,7 @@ light_color = Color(1, 0.74976766, 0.6839528, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5329273, 2.1448915)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5039586, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5039586, -4.447238)
 mesh = SubResource("CylinderMesh_7hr0d")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="StaticBody3D/MeshInstance3D"]
@@ -139,10 +139,6 @@ mesh = SubResource("BoxMesh_w8n5r")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Node3D2/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_bvftq")
 
-[node name="Entity" parent="." node_paths=PackedStringArray("patrol_points_root") groups=["enemy"] instance=ExtResource("4_uewew")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34903717, -8.605953)
-patrol_points_root = NodePath("../WaypointGroup")
-
 [node name="Point1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.678133, 0.75438833, -7.715312)
 
@@ -151,7 +147,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.446373, 0.5657835, 5.7288)
 
 [node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("5_w8n5r")
-target = NodePath("../Ship")
+target = NodePath("../Player")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.34202012, 0, -0.34202012, 0.9396926, 0, 0.375, 0)
@@ -161,8 +157,6 @@ script = ExtResource("5_uewew")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 current = true
 
-[node name="Ship" parent="." instance=ExtResource("2_qjd3p")]
-
 [node name="WaypointGroup" type="Node3D" parent="."]
 
 [node name="Marker3D2" type="Marker3D" parent="WaypointGroup"]
@@ -170,3 +164,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.818803, 0.4693272, -6.08971
 
 [node name="Marker3D" type="Marker3D" parent="WaypointGroup"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.346402, 0.33802128, -5.6137514)
+
+[node name="Entity" parent="." node_paths=PackedStringArray("patrol_points_root") groups=["enemy"] instance=ExtResource("4_uewew")]
+transform = Transform3D(-0.96607924, 0, -0.2582459, 0, 1, 0, 0.2582459, 0, -0.96607924, 0, 0.74522805, -8.764446)
+patrol_points_root = NodePath("../WaypointGroup")
+
+[node name="Player" parent="." instance=ExtResource("2_qjd3p")]

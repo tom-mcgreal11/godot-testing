@@ -13,10 +13,10 @@ func _ready():
 func _setup_enemy(enemy):
 	enemy.connect("reached_point", Callable(self, "_on_enemy_reached_point"))
 	next_index_for_enemy[enemy] = 0
-	enemy.patrol(waypoints[0].global_transform.origin)
+	enemy.set_target(waypoints[0].global_transform.origin)
 
 func _on_enemy_reached_point(enemy):
 	var idx = next_index_for_enemy.get(enemy, 0)
 	idx = (idx + 1) % waypoints.size()
 	next_index_for_enemy[enemy] = idx
-	enemy.patrol(waypoints[idx].global_transform.origin)
+	enemy.set_target(waypoints[idx].global_transform.origin)

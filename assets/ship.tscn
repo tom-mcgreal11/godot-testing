@@ -14,8 +14,9 @@ material = SubResource("StandardMaterial3D_x1h0q")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wwg4n"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.014651676, 0.47069666, 0.47069666, 0.073521286, 0.35295743, 0.47060993, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.014651676, 0.47069666, -0.47069666, 0.5, -0.5, 0.5, -0.014651676, 0.47069666, 0.47069666, 0.014651676, 0.47069666, -0.47069666)
 
-[node name="Ship" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33725333, 0)
+collision_mask = 3
 script = ExtResource("1_x1h0q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
