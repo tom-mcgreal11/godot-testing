@@ -1,13 +1,15 @@
 extends SpringArm3D
 
 @export var zoom_speed: float = 1.0
+@export var mouse_sensitivity: float = 0.001
 
 func _unhandled_input(event: InputEvent) -> void:
-	#if event is InputEventMouseMotion && Input.mouse_mode == 2:
-	#	rotation.y -= event.relative.x * mouse_sensitivity
-	#	rotation.y = wrapf(rotation.y, 0 , TAU) 
-	#	rotation.x -= event.relative.y * mouse_sensitivity
-	#	rotation.x = clamp(rotation.x, -PI/2, PI/4)
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		# Horizontal rotation (yaw) around player
+		rotate_y(-event.relative.x * mouse_sensitivity)
+		
+		# Vertical rotation (pitch), clamp between -90 and 45 deg
+		rotation.x = clamp(rotation.x - event.relative.y * mouse_sensitivity, -PI/2, PI/4)
 
 	if event.is_action_pressed("wheel_up"):
 		spring_length = max(1.0, spring_length - zoom_speed)
@@ -19,4 +21,3 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		

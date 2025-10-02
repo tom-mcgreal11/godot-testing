@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var nav = $NavigationAgent3D as NavigationAgent3D
 @export var patrol_points_root: Node3D
+@export var health = 100
 #IMPORTANT waypoints root on instance
 
 var patrol_points: Array[Node] = []
@@ -35,6 +36,8 @@ func _physics_process(delta: float) -> void:
 		patrol()
 	elif state == "attack":
 		attack()
+	elif state == "dead":
+		kill()
 	else:
 		do_nothing()
 
@@ -97,3 +100,14 @@ func _on_vision_timer_timeout() -> void:
 			else:
 				set_state("patrol")
 				visRay.debug_shape_custom_color = Color(174,0,200)
+
+func kill():
+	queue_free()
+	
+func _on_hitbox_area_entered(area: Area3D) -> void:
+	print(str(area))
+	if area.is_in_group("weapon"):
+		print("hit")
+		health -= 100.0;
+		if health <= 0.0:
+			set_state("dead")
