@@ -10,10 +10,33 @@ extends CharacterBody3D
 @onready var jump_count := 0
 @export var camera: Node3D
 @onready var speed = ground_speed
+enum player_state {MOVING, SWORD, JUMP, DEAD}
+var current_state = player_state.MOVING
 
 func _physics_process(delta: float) -> void:
 	#look_at(camera.basis.z, Vector3.UP)
 # Get camera forward/right, flattened
+	match current_state:
+		player_state.MOVING:
+			move(delta)
+		player_state.JUMP:
+			jump(delta)
+		player_state.SWORD:
+			sword()
+		player_state.DEAD:
+			pass
+	
+	if Input.is_action_just_pressed("sword"):
+		current_state = player_state.SWORD
+	#velocity = direction * speed
+	move_and_slide()
+	
+
+func sword():
+	pass
+	#anim_state.travel("sword")
+
+func move(delta):
 	var forward = camera.basis.z
 	var right = camera.basis.x
 	forward.y = 0
@@ -44,22 +67,21 @@ func _physics_process(delta: float) -> void:
 	#rotate(Vector3.FORWARD, rotate_input * delta)
 	#look_input = Input.get_axis("look_up", "look_down") * look_rate
 	#rotate(Vector3.RIGHT, look_input * delta )
-	
+
+func jump(delta):
 	if not is_on_floor():
 		while speed > in_air_speed:
 			speed -= 0.01
 		velocity.y += gravity * delta
 		if jump_count <= 1 && Input.is_action_just_pressed("jump"):
-			jump()
-			
+			velocity.y = jump_strength
+			jump_count+=1
 	else:
 		speed = ground_speed
 		jump_count = 0
 		if Input.is_action_just_pressed("jump"):
-			jump()
-	#velocity = direction * speed
-	move_and_slide()
-	
-func jump():
-	velocity.y = jump_strength
-	jump_count+=1
+			velocity.y = jump_strength
+			jump_count+=1
+
+func reset_state():
+	current_state = player_state.MOVING

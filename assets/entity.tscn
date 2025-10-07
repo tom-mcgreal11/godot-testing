@@ -56,13 +56,13 @@ target_position = Vector3(0, 0, -7)
 debug_shape_custom_color = Color(0.72925997, 0.0004763019, 0.74441206, 1)
 
 [node name="hitbox" type="Area3D" parent="."]
-collision_layer = 12
-collision_mask = 12
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="hitbox"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0.13247514)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 shape = SubResource("SphereShape3D_n0p58")
-debug_color = Color(0.58431375, 0.5529412, 0, 1)
+debug_color = Color(0.7819623, 0.6595932, 1.1551381e-06, 0.41960785)
 
 [connection signal="timeout" from="VisionTimer" to="." method="_on_vision_timer_timeout"]
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

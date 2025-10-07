@@ -41,6 +41,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		do_nothing()
 
+func kill():
+	queue_free()
+
 func attack():
 	set_target(player)
 	
@@ -101,13 +104,9 @@ func _on_vision_timer_timeout() -> void:
 				set_state("patrol")
 				visRay.debug_shape_custom_color = Color(174,0,200)
 
-func kill():
-	queue_free()
-	
+
 func _on_hitbox_area_entered(area: Area3D) -> void:
-	print(str(area))
-	if area.is_in_group("weapon"):
-		print("hit")
-		health -= 100.0;
-		if health <= 0.0:
-			set_state("dead")
+	if area.is_in_group("sword"):
+		health -= 25
+		if health <= 0:
+			state = "dead"

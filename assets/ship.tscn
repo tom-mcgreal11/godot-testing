@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cerl7c5vvp5sk"]
+[gd_scene load_steps=6 format=3 uid="uid://cerl7c5vvp5sk"]
 
 [ext_resource type="Script" uid="uid://dx88ajv2ceue" path="res://assets/ship_movement.gd" id="1_x1h0q"]
 
@@ -14,10 +14,11 @@ material = SubResource("StandardMaterial3D_x1h0q")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wwg4n"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.014651676, 0.47069666, 0.47069666, 0.073521286, 0.35295743, 0.47060993, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.014651676, 0.47069666, -0.47069666, 0.5, -0.5, 0.5, -0.014651676, 0.47069666, 0.47069666, 0.014651676, 0.47069666, -0.47069666)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_laron"]
+size = Vector3(2.5482178, 0.38531494, 1.2402344)
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33725333, 0)
-collision_layer = 5
-collision_mask = 9
 script = ExtResource("1_x1h0q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -27,3 +28,12 @@ mesh = SubResource("PrismMesh_x1h0q")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 0.99999994, 0, -0.99999994, -4.3711385e-08, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_wwg4n")
+
+[node name="sword" type="Area3D" parent="." groups=["sword"]]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sword"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10247803, -0.08609009, -1.1447563)
+shape = SubResource("BoxShape3D_laron")
+debug_color = Color(0.9913104, 0, 0.27320355, 0.41960785)
