@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var ground_speed := 10.0
+@onready var health := 100
 @onready var in_air_speed := 6.0
 @export var gravity: float = -30.0
 @export var jump_strength: float = 15.0
@@ -10,7 +11,7 @@ extends CharacterBody3D
 @onready var jump_count := 0
 @export var camera: Node3D
 @onready var speed = ground_speed
-enum player_state {MOVING, SWORD, JUMP, DEAD}
+enum player_state {MOVING, SWORD, DEAD}
 var current_state = player_state.MOVING
 
 func _physics_process(delta: float) -> void:
@@ -19,18 +20,20 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		player_state.MOVING:
 			move(delta)
-		player_state.JUMP:
-			jump(delta)
 		player_state.SWORD:
 			sword()
 		player_state.DEAD:
-			pass
+			kill()
 	
 	if Input.is_action_just_pressed("sword"):
 		current_state = player_state.SWORD
+	if Input.is_action_just_pressed("jump"):
+		jump(delta)
 	#velocity = direction * speed
 	move_and_slide()
 	
+func kill():
+	print("YOU DIED")
 
 func sword():
 	pass
@@ -59,7 +62,8 @@ func move(delta):
 	# Apply speed
 	velocity.x = move_dir.x * speed
 	velocity.z = move_dir.z * speed
-
+	if not is_on_floor():
+		velocity.y += gravity * delta
 	#rotate(Vector3.RIGHT, 1.0 * delta)
 	#yaw_input = - Input.get_axis("yaw_left", "yaw_right") * yaw_rate
 	#rotate(Vector3.UP, yaw_input * delta)
@@ -68,7 +72,7 @@ func move(delta):
 	#look_input = Input.get_axis("look_up", "look_down") * look_rate
 	#rotate(Vector3.RIGHT, look_input * delta )
 
-func jump(delta):
+func jump(delta):	
 	if not is_on_floor():
 		while speed > in_air_speed:
 			speed -= 0.01
@@ -85,3 +89,9 @@ func jump(delta):
 
 func reset_state():
 	current_state = player_state.MOVING
+
+#temp func for onhit:
+func on_hit(damage):
+	health -= damage
+	if health <= 0:
+		current_state = player_state.DEAD
